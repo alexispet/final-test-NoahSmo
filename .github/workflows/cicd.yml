@@ -36,8 +36,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          docker-compose build
-          docker-compose run --rm next npm run test
+          docker compose build
+          docker compose run --rm next npm run test
   build-and-push-image:
     needs: [test]
     runs-on: ubuntu-latest
