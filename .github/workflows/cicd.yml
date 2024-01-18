@@ -1,0 +1,39 @@
+name: Build and Push Docker Image
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build and test
+        run: |
+          docker compose -f docker-compose.yml build
+          docker compose -f docker-compose.yml run --rm app npm run test
+
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '21.5'
+      - uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      - run: npm ci
+
+#  deploy:
+#    needs: [test]
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: webfactory/ssh-agent@v0.8.0
+#        with:
+#          ssh-private-key: ${{ secrets.SSH_KEY }}
+#      - run : |
+#          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "\
+#          sudo docker compose -f docker-compose.prod.yml up --pull always -d"

@@ -1,0 +1,38 @@
+services:
+  node:
+    container_name: node
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: development
+      DB_HOST: ${{ secrets.DB_HOST }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      PORT: 3000
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    command: npm run dev
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    container_name: mariadb
+    image: mariadb:11.2.2-jammy
+    environment:
+      MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      MYSQL_DATABASE: ${{ secrets.DB_NAME }}
+      MYSQL_USER: ${{ secrets.DB_USER
+      MYSQL_PASSWORD: ${{ secrets.DB_PASSWORD }}
+    volumes:
+      - ./data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 1s
+      timeout: 5s
