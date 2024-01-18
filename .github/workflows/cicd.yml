@@ -49,7 +49,7 @@ jobs:
           test-command: "npm run lint"
 
   build-and-push-image:
-    needs: [tests]
+    needs: [tests, lint]
     runs-on: ubuntu-latest
     permissions:
       contents: read
