@@ -35,9 +35,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: npm install
-      - run: npm run test
-
+        run: |
+          docker-compose build
+          docker-compose run --rm next npm run test
   build-and-push-image:
     needs: [test]
     runs-on: ubuntu-latest
