@@ -6,10 +6,10 @@ services:
       dockerfile: Dockerfile
     environment:
       NODE_ENV: development
-      DB_HOST: ${secrets.DB_HOST}
-      DB_USER: ${secrets.DB_USER}
-      DB_PASSWORD: ${secrets.DB_PASSWORD}
-      DB_NAME: ${secrets.DB_NAME}
+      DB_HOST: ${DB_HOST}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
       PORT: 3000
     volumes:
       - .:/app
@@ -24,10 +24,10 @@ services:
     container_name: mariadb
     image: mariadb:11.2.2-jammy
     environment:
-      MYSQL_ROOT_PASSWORD: ${secrets.DB_PASSWORD}
-      MYSQL_DATABASE: ${secrets.DB_NAME}
-      MYSQL_USER: ${secrets.DB_USER}
-      MYSQL_PASSWORD: ${secrets.DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ./data:/var/lib/mysql
     ports:
