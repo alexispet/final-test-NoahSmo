@@ -24,10 +24,10 @@ services:
     container_name: mariadb
     image: mariadb:11.2.2-jammy
     environment:
-      MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      MYSQL_DATABASE: ${{ secrets.DB_NAME }}
-      MYSQL_USER: ${{ secrets.DB_USER
-      MYSQL_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      MYSQL_ROOT_PASSWORD: ${secrets.DB_PASSWORD}
+      MYSQL_DATABASE: ${secrets.DB_NAME}
+      MYSQL_USER: ${secrets.DB_USER}
+      MYSQL_PASSWORD: ${secrets.DB_PASSWORD}
     volumes:
       - ./data:/var/lib/mysql
     ports:
