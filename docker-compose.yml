@@ -17,10 +17,10 @@ services:
       - "3000:3000"
     command: npm run dev
     depends_on:
-      db:
+      mariadb:
         condition: service_healthy
 
-  db:
+  mariadb:
     container_name: mariadb
     image: mariadb:11.2.2-jammy
     environment:
