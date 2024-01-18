@@ -12,20 +12,20 @@ env:
   DB_NAME: ${{ secrets.DB_NAME }}
 
 jobs:
-#  lint:
-#    name: lint
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout Code
-#        uses: actions/checkout@v4
-#        with:
-#          fetch-depth: 0
-#      - name: lint
-#        uses: github/super-linter@v4
-#        env:
-#          VALIDATE_ALL_CODEBASE: false
-#          DEFAULT_BRANCH: develop
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: lint
+        uses: github/super-linter@v4
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: develop
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 #  dependency-audit:
 #    runs-on: ubuntu-latest
@@ -34,7 +34,7 @@ jobs:
 #      - run: npm audit --audit-level=high
 
   test:
-    #needs: [lint]
+    needs: [lint]
     name: test
     runs-on: ubuntu-latest
     steps:
