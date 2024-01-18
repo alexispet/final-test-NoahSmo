@@ -4,7 +4,6 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js",
     "start": "node app.js",
     "test": "mocha tests/**/*.test.js --exit",
     "db:import": "node database/init-db.js"
@@ -22,7 +21,6 @@
   },
   "devDependencies": {
     "mocha": "^10.2.0",
-    "nodemon": "^3.0.3",
     "supertest": "^6.3.3"
   }
 }

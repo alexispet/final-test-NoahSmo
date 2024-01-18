@@ -1,9 +1,8 @@
 services:
   node:
-    container_name: node
     build:
       context: .
-      dockerfile: Dockerfile
+      target: node
     environment:
       NODE_ENV: development
       DB_HOST: ${DB_HOST}
@@ -15,13 +14,12 @@ services:
       - .:/app
     ports:
       - "3000:3000"
-    command: npm run dev
+    command: npm run start
     depends_on:
       mariadb:
         condition: service_healthy
 
   mariadb:
-    container_name: mariadb
     image: mariadb:11.2.2-jammy
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}

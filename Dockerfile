@@ -6,7 +6,7 @@ WORKDIR /app
 
 RUN npm install
 
-FROM node:21.5-alpine as api
+FROM node:21.5-alpine as node
 
 WORKDIR /app
 
