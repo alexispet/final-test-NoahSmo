@@ -71,7 +71,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/api
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/api:develop
       - name: Build and push (development)
         uses: docker/build-push-action@v5
         with:
