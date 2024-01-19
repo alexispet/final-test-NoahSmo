@@ -148,13 +148,13 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v3
-      - name: Login to GitHub Container Registry
+      - name: Login to GitHub Container Registry (development)
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and push
+      - name: Build and push (development)
         uses: docker/build-push-action@v4
         with:
           push: true
