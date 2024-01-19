@@ -1,15 +1,15 @@
-name: ansible
-on: [workflow_dispatch]
-
-jobs:
-  trigger:
-    runs-on: ubuntu-latest
-    if: github.ref_name == 'develop' || github.ref_name == 'main'
-    steps:
-      - name: Trigger deployment
-        uses: peter-evans/repository-dispatch@v1
-        with:
-          token: ${{ secrets.SSH_KEY }}
-          repository: alexispet/final-test-noahsmo
-          event-type: deploy
-          client-payload: '{"ref": "${{ github.ref_name }}"}'
+#name: ansible
+#on: [workflow_dispatch]
+#
+#jobs:
+#  trigger:
+#    runs-on: ubuntu-latest
+#    if: github.ref_name == 'develop' || github.ref_name == 'main'
+#    steps:
+#      - name: Trigger deployment
+#        uses: peter-evans/repository-dispatch@v1
+#        with:
+#          token: ${{ secrets.SSH_KEY }}
+#          repository: alexispet/final-test-noahsmo
+#          event-type: deploy
+#          client-payload: '{"ref": "${{ github.ref_name }}"}'
