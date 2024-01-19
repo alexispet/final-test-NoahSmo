@@ -2,8 +2,8 @@
 # Y Social network API
 
 Noah Petel.
-Production URL: http://ec2-54-234-91-239.compute-1.amazonaws.com/80
-Development URL: http://eec2-54-234-91-239.compute-1.amazonaws.com/3000
+Production URL: http://ec2-54-234-91-239.compute-1.amazonaws.com:80
+Development URL: http://eec2-54-234-91-239.compute-1.amazonaws.com:3000
 
 ## Description
 This is the official API for the Y Social Network. 
