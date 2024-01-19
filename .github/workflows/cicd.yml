@@ -72,6 +72,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
   build-docker-dev:
+    needs: [tests]
     runs-on: ubuntu-latest
     if: github.ref_name == 'develop'
     environment:
@@ -103,6 +104,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
   build-docker-prod:
+    needs: [tests]
     runs-on: ubuntu-latest
     if: github.ref_name == 'main'
     environment:
