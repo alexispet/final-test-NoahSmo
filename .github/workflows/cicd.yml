@@ -97,7 +97,7 @@ jobs:
           tags: ghcr.io/alexispet/final-test-noahsmo:development
 
   deploy-serv:
-    needs: [ tests, dependency-audit, linter, deploy-development]
+    needs: [ tests, dependency-audit, deploy-development]
     runs-on: ubuntu-latest
     steps:
       - uses: webfactory/ssh-agent@v0.8.0
