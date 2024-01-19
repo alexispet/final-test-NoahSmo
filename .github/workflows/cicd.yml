@@ -71,7 +71,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/api:develop
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/api
       - name: Build and push (development)
         uses: docker/build-push-action@v5
         with:
@@ -103,7 +103,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/api:production
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/api
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
