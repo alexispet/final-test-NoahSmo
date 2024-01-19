@@ -6,10 +6,6 @@ on: [push]
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  DB_HOST: ${{ secrets.DB_HOST }}
-  DB_USER: ${{ secrets.DB_USER }}
-  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-  DB_NAME: ${{ secrets.DB_NAME }}
 
 jobs:
   tests:
@@ -19,6 +15,10 @@ jobs:
       - uses: adambirds/docker-compose-action@v1.3.0
         env:
           NODE_ENV: development
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_NAME: ${{ secrets.DB_NAME }}
         with:
           compose-file: "./docker-compose.yml"
           down-flags: "--volumes"
@@ -35,6 +35,10 @@ jobs:
       - uses: adambirds/docker-compose-action@v1.3.0
         env:
           NODE_ENV: development
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_NAME: ${{ secrets.DB_NAME }}
         with:
           compose-file: "./docker-compose.yml"
           down-flags: "--volumes"
