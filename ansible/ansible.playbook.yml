@@ -1,55 +1,70 @@
 ---
-- hosts: "webservers"
-  remote_user: "admin"
+- hosts: webservers
+  remote_user: admin
   become: true
   become_method: sudo
+  gather_facts: true
 
-  name: Installing Docker
   tasks:
     - name: Install aptitude using apt
       apt:
-        update_cache: yes
         name: aptitude
-        state: latest
-        force_apt_get: yes
+        state: present
+      vars:
+        ansible_become: true
 
     - name: Install required system packages
       apt:
-        name: ['apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip']
-        state: latest
-        force_apt_get: yes
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - python3-pip
+        state: present
+      vars:
+        ansible_become: true
 
     - name: Add Docker GPG apt Key
       apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         state: present
+      vars:
+        ansible_become: true
 
     - name: Add Docker Repository
       apt_repository:
         repo: deb https://download.docker.com/linux/ubuntu bionic stable
         state: present
+      vars:
+        ansible_become: true
 
     - name: Update apt and install docker-ce
       apt:
-        update_cache: yes
         name: docker-ce
-        state: latest
-        force_apt_get: yes
+        state: present
+      vars:
+        ansible_become: true
 
     - name: Install docker-compose
       pip:
         name: docker-compose
         state: present
+      vars:
+        ansible_become: true
 
     - name: Add admin to docker group
       user:
         name: admin
         groups: docker
         append: yes
+      vars:
+        ansible_become: true
 
     - name: Start and enable systemd service
       systemd:
         name: docker
         state: started
         enabled: yes
-
+      vars:
+        ansible_become: true
