@@ -7,8 +7,8 @@ services:
       NODE_ENV: development
       DB_HOST: ${DB_HOST}
       DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
+      DB_PASSWORD: ${DB_PASSWORD}
       PORT: 3000
     volumes:
       - .:/app
@@ -22,10 +22,10 @@ services:
   mariadb:
     image: mariadb:11.2.2-jammy
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_USER}
+      MYSQL_DATABASE: ${DB_NAME}
       MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ./data:/var/lib/mysql
     ports:
