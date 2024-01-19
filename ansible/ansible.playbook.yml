@@ -6,70 +6,50 @@
 
   name: Installing Docker
   tasks:
-    - name: Check if Docker is installed
-      become: yes
-      command: docker -v
-      register: docker_installed
-      ignore_errors: true
+    - name: Install aptitude using apt
+      apt:
+        update_cache: yes
+        name: aptitude
+        state: latest
+        force_apt_get: yes
 
-    - name: Install Docker
-      become: yes
-      block:
-        - name: Add Docker's official GPG key
-          block:
-            - name: Update apt
-              include_tasks: apt.yml
-            - name: Install necessary packages
-              become: yes
-              ansible.builtin.apt:
-                name:
-                  - ca-certificates
-                  - curl
-                  - gnupg
-                state: latest
-                update_cache: yes
-            - name: Add GPG key
-              ansible.builtin.shell:
-                cmd: |
-                  sudo install -m 0755 -d /etc/apt/keyrings
-                  curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-                  sudo chmod a+r /etc/apt/keyrings/docker.gpg
-        - name: Add the repository to Apt sources
-          block:
-            - name: Add repos
-              ansible.builtin.shell:
-                cmd: |
-                  echo \
-                  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
-                  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
-                  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-            - name: Update apt
-              include_tasks: apt.yml
+    - name: Install required system packages
+      apt:
+        name: ['apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip']
+        state: latest
+        force_apt_get: yes
 
-        - name: Install Docker packages
-          become: yes
-          ansible.builtin.apt:
-            name:
-              - docker-ce
-              - docker-ce-cli
-              - containerd.io
-              - docker-buildx-plugin
-              - docker-compose-plugin
-            state: latest
-            update_cache: yes
-      when: docker_installed.failed
-
-    - name: Ensure Docker group exists
-      become: yes
-      ansible.builtin.group:
-        name: docker
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
         state: present
-      register: docker_group
 
-    - name: Add User to docker group
-      become: yes
-      ansible.builtin.user:
-        name: yourUser
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu bionic stable
+        state: present
+
+    - name: Update apt and install docker-ce
+      apt:
+        update_cache: yes
+        name: docker-ce
+        state: latest
+        force_apt_get: yes
+
+    - name: Install docker-compose
+      pip:
+        name: docker-compose
+        state: present
+
+    - name: Add admin to docker group
+      user:
+        name: admin
         groups: docker
-        append: true
-      when: docker_group is changed
+        append: yes
+
+    - name: Start and enable systemd service
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+
