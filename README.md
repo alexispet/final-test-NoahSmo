@@ -1,9 +1,9 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/OlYrOqbl)
 # Y Social network API
 
-Noah Petel
-Production URL: http://ec2-54-234-91-239.compute-1.amazonaws.com
-Development URL: http://ec2-3-80-79-241.compute-1.amazonaws.com
+Noah Petel.
+Production URL: http://ec2-54-234-91-239.compute-1.amazonaws.com/80
+Development URL: http://eec2-54-234-91-239.compute-1.amazonaws.com/3000
 
 ## Description
 This is the official API for the Y Social Network. 
