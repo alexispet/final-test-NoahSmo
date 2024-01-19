@@ -1,9 +1,6 @@
 name: ansible
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [workflow_dispatch]
+
 jobs:
   trigger:
     runs-on: ubuntu-latest
