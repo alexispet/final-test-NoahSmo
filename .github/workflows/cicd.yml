@@ -28,7 +28,7 @@ jobs:
           test-container: node
           test-command: "npm run test"
 
-  eslint:
+  linter:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -71,7 +71,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/app
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/api:dev
       - name: Build and push (development)
         uses: docker/build-push-action@v5
         with:
@@ -103,7 +103,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/app
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/api:latest
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
@@ -111,6 +111,19 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  deploy-prod:
+    needs: [tests, audit, linter]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+      - run : |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "\
+          sudo docker compose -f docker-compose.prod.yml up --pull always -d"
+            
+
 
   # lighthouse:
   #   runs-on: ubuntu-latest
