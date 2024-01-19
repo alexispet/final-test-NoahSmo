@@ -16,6 +16,7 @@ COPY --from=build /app/app.js .
 
 EXPOSE 3000
 
+COPY docker-compose.prod.yml /app/
 COPY docker/next/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
 
